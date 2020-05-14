@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import esferas from '../../mocks/esferas.json';
-import { profile } from '../../mocks/profile.json';
 
 import {
   Card as BCard,
@@ -29,8 +27,8 @@ const Card = styled(BCard)`
   margin: 5px 0px;
 `;
 
-const Balls = () => {
-  const [list, setList] = useState(esferas.balls);
+const Balls = ({ balls, profile }) => {
+  const [list, setList] = useState(balls);
   const [modal, setModal] = useState(false);
   const [currentBall, setBall] = useState(null);
 
@@ -42,31 +40,30 @@ const Balls = () => {
   }
 
   const filterByMe = () => {
-    return esferas.balls.filter((ball) => ball.owner === profile.id);
+    return balls.filter((ball) => ball.owner === profile.id);
   };
 
   const filterNotMe = () => {
-    return esferas.balls.filter((ball) => ball.owner !== profile.id);
+    return balls.filter((ball) => ball.owner !== profile.id);
   };
 
   const filter = (value) => {
     const cases = {
       me: () => setList(filterByMe()),
-      all: () => setList(esferas.balls),
+      all: () => setList(balls),
       notme: () => setList(filterNotMe()),
     };
     return cases[value]();
   };
 
   const updateList = (id) => {
-    const newList = esferas.balls.map((ball) => {
+    const newList = balls.map((ball) => {
       if(ball.id === id) return {
         ...ball,
         owner: profile.id
       }
       return ball
     })
-    console.log("NEWLIST", newList)
     const newProfile = profile.balls.push(id)
 
     setList(newList)
@@ -83,6 +80,7 @@ const Balls = () => {
             type='select'
             name='select'
             id='filter'
+            data-testid="filter"
             onChange={({ target: { value } }) => filter(value)}
           >
             <option value='all'>Todas as esferas</option>
@@ -94,7 +92,7 @@ const Balls = () => {
       <Row>
         {list.length > 0 ? (
           list.map((ball, i) => (
-            <Col sm='3'>
+            <Col sm='3' key={ball.id}>
               <Card>
                 <CardImg top width='100%' src={ball.image} alt={ball.name} />
                 <CardBody>

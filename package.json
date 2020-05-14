@@ -5,9 +5,6 @@
   "dependencies": {
     "@rebass/forms": "^4.0.6",
     "@rebass/preset": "^4.0.5",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^10.0.2",
-    "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "history": "^4.10.1",
@@ -23,8 +20,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
-    "eject": "react-scripts eject"
+    "test": "jest --env=jest-environment-jsdom-sixteen",
+    "eject": "react-scripts eject",
+    "cy:run": "cypress run --headed"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,5 +38,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^10.0.2",
+    "@testing-library/user-event": "^7.1.2",
+    "cypress": "^4.5.0",
+    "jest-environment-jsdom": "^26.0.1",
+    "jest-environment-jsdom-sixteen": "^1.0.3"
   }
 }
